@@ -22,32 +22,42 @@ Note:
 """
 
 
-def rotate(nums, k):
+def rotate(nums, k):  # intuitive idea: Time Limit Exceed
     """
     :type nums: List[int]
     :type k: int
     :rtype: None Do not return anything, modify nums in-place instead.
     """
-    """ # intuitive idea: Time Limit Exceed
     length = len(nums)-1
     for _ in range(k):
         temp = nums[-1]
         for i in range(length, 0, -1):
             nums[i] = nums[i-1]
         nums[0] = temp
-    """
-    """ # order change, but used O(n) extra space for "order", and a new list "nums".
+
+
+def rotate2(nums, k):  # order change, but used O(n) extra space for "order", and a new list "nums".
     length = len(nums)
     order = [i%length for i in range(length-k, 2*length-k)]
-    nums = [nums[i] for i in order]
-    """
-    length = len(nums)
+    nums[:] = [nums[i] for i in order]
 
-    index_in, index_out = 0, length - k
-    temp = nums[index_in]
-    while index_out != 0:
-        nums[index_in] = nums[index_out]
-    index_out = index_in
-    index_in = index_in - k
-    if index_in < 0:
-        index_in += length
+
+def rotate3(nums, k):  # solution with O(1) extra space
+    def transpose(nums, lo, hi):
+        if lo >= hi:
+            return
+        while lo < hi:
+            nums[lo], nums[hi - 1] = (nums[hi - 1], nums[lo])
+            lo += 1
+            hi -= 1
+    length = len(nums)
+    k %= length
+    transpose(nums, 0, length - k)
+    transpose(nums, length - k, length)
+    transpose(nums, 0, length)
+
+
+def rotate4(nums, k):  # fastest method.
+    n = len(nums)
+    k = k % len(nums)
+    nums[:] = nums[n - k:] + nums[:n - k]  # *** nums[:] can change the original nums. see rotate 2
