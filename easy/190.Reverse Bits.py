@@ -24,7 +24,21 @@ Follow up:
 
 # @param n, an integer
 # @return an integer
-def reverseBits(self, n):
+def reverseBits(n):  # 24 ms, faster than 64.47%.
+    res = 0
+    for i in range(32):
+        res *= 2
+        if n > 0:
+            res += n % 2
+            n = n / 2
+    return res
 
-    return n
+
+def reverseBits2(n):  # 20 ms, faster than 94.60%, best solution from submissions.
+        s = bin(n)[2:]  # ***
+        s = "0" * (32 - len(s)) + s
+        t = s[::-1]
+        return int(t, 2)  # ***
+
+
 
