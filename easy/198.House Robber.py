@@ -17,9 +17,28 @@ Example 2:
 """
 
 
-def rob(nums):
+def rob(nums):  # 20 ms, faster than 72.21%
     """
     :type nums: List[int]
     :rtype: int
     """
-    
+    houses = len(nums)
+    res3, res2, res1 = 0, 0, 0
+    for i in range(houses):
+        res = nums[i] + max(res3, res2)
+        res3, res2, res1 = res2, res1, res
+    return max(res2, res1)
+
+
+def rob2(nums):  # 20 ms, faster than 72.21%, best solution from submissions.
+    if not nums:
+        return 0
+    if len(nums) == 1:
+        return nums[0]
+
+    dp = [0 for i in range(len(nums))]
+    dp[0] = nums[0]
+    dp[1] = max(nums[0], nums[1])
+    for i in range(2, len(nums)):
+        dp[i] = max(nums[i] + dp[i - 2], dp[i - 1])
+    return dp[-1]
