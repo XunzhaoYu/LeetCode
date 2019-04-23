@@ -60,7 +60,7 @@ def toHex2(num):
 def toHex3(num):
     # 36 ms, faster than 80.93%. The best solution from submissions (28 ms).
     ans = ""
-    for _ in range(8):4
+    for _ in range(8):
         num, r = divmod(num, 16)  # *** divmod() div, mod
         ans = "0123456789abcdef"[r] + ans
         if num == 0:
