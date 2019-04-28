@@ -34,7 +34,7 @@ def arrangeCoins(n: int) -> int:
     """
     # 40 ms, faster than 100%.
     return int(math.sqrt(2 * n + 0.25) - 0.5)
-    # (1+N)N/2 <= n < (2+N)N/2
-    # N + N^2 <= 2n < 2N + N^2
-    # (N + 0.5)^2 <= 2n + 0.25 < (N + 1)^2 - 0.75
-    # N <= sqrt(2n + 0.25) - 0.5
+    # (1+N)N/2 <= n < (2+N)(N+1)/2
+    # N + N^2 <= 2n < N^2 + 3N + 2
+    # (N + 0.5)^2 <= 2n + 0.25 < (N + 1.5)^2
+    # N <= sqrt(2n + 0.25) - 0.5 < N + 1
