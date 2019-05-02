@@ -17,3 +17,8 @@ Example:
 """
 
 def hammingDistance(x: int, y: int) -> int:
+    # 36 ms, faster than 89.25%. Same to the best solution from submissions but shorter.
+    return bin(x ^ y)[2:].count('1')
+
+
+print(hammingDistance(1, 4))
