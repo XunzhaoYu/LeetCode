@@ -1,3 +1,4 @@
+from collections import defaultdict
 """
 You are given two arrays (without duplicates) nums1 and nums2 where nums1’s elements are subset of nums2. Find all the next greater numbers for
 nums1's elements in the corresponding places of nums2.
@@ -24,8 +25,22 @@ Note:
 """
 
 
-def nextGreaterElement(nums1, nums2):# List[int], nums2: List[int]) -> List[int]:
-    value_to_greater = collections.defaultdict(lambda: -1)
+def nextGreaterElement(nums1: List[int], nums2: List[int]) -> List[int]:
+    # 40 ms, faster than 98.84%.
+    if not nums2:
+        return []
+    greater_values, searching = [-1, ] * (max(nums2) + 1), []
+    for n in nums2:
+        while searching and searching[-1] < n:
+            greater_values[searching.pop()] = n
+        searching.append(n)
+    return [greater_values[n] for n in nums1]
+
+
+
+def nextGreaterElement2(nums1: List[int], nums2: List[int]) -> List[int]:
+    # 44 ms, faster than 86.88%. Same time to the best solution from submissions (36 ms).
+    value_to_greater = defaultdict(lambda: -1)
     stack = []
     for num in nums2:
         while stack and num > stack[-1]:
@@ -33,7 +48,6 @@ def nextGreaterElement(nums1, nums2):# List[int], nums2: List[int]) -> List[int]
         stack.append((num))
     return [value_to_greater[num] for num in nums1]
 
-    return res
 
 print(nextGreaterElement([4,1,2],[1,3,4,2]))  # [-1,3,-1]
 print(nextGreaterElement([2,4], [1,2,3,4]))  # [3,-1]
