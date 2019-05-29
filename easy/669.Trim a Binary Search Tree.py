@@ -45,5 +45,16 @@ Example 2:
 #         self.left = None
 #         self.right = None
 
-class Solution:
-    def trimBST(root: TreeNode, L: int, R: int) -> TreeNode:
+def trimBST(root: TreeNode, L: int, R: int) -> TreeNode:
+    # 52 ms, faster than 97.68%. The best solution from submissions tested to be 56 ms (44 ms)
+    if root:
+        if root.val < L:
+            return trimBST(root.right, L, R)
+        elif root.val > R:
+            return trimBST(root.left, L, R)
+        else:
+            root.left = trimBST(root.left, L, R)
+            root.right = trimBST(root.right, L, R)
+            return root
+    return None
+
