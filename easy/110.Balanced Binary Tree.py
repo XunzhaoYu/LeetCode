@@ -34,21 +34,39 @@ Example 2:
 #         self.left = None
 #         self.right = None
 
-def isBalanced(root):
+# Iterative solution:
+def isBalanced(root):  # 48 ms, faster than 55.75%, 13.4 MB, less than 99.13%.
     """
     :type root: TreeNode
     :rtype: bool
     """
     if root:
-        queue, heights = collections.deque([(root, 1)]), []
+        level_nodes, max_level, queue = [], 0, [root]
         while queue:
-            node, height = queue.popleft()
-            if node:
-                queue.append((node.left, height+1))
-                queue.append((node.right, height+1))
-            else:
-                heights.append(height-1)
-        print(heights)
-        if heights[-1] - heights[0] > 1:
-            return False
+            level_nodes.append([])
+            temp_queue = []
+            for node in queue:
+                if node:
+                    level_nodes[max_level].append(1)
+                    temp_queue.append(node.left)
+                    temp_queue.append(node.right)
+                else:
+                    level_nodes[max_level].append(0)
+            queue = temp_queue
+            max_level += 1
+        # get level_nodes, [[nodes in level 1], [nodes in level 2], ... [nodes in level n]]
+
+        lengths = [len(list) for list in level_nodes]
+        current_level = max_level - 1
+        while current_level > -1:
+            sub_index = 0
+            for index in range(lengths[current_level]):
+                if level_nodes[current_level][index] != 0:
+                    # if sub_index+1 < lengths[current_level+1]:
+                    level_nodes[current_level][index] += max(level_nodes[current_level + 1][sub_index], level_nodes[current_level + 1][sub_index + 1])
+                    sub_index += 2
+                if index % 2 == 1 and abs(level_nodes[current_level][index] - level_nodes[current_level][index - 1]) > 1:
+                    return False
+            current_level -= 1
+            # update value of level_nodes to their depth.
     return True

@@ -23,7 +23,7 @@ Example:
 #         self.left = None
 #         self.right = None
 
-def sortedArrayToBST(nums):
+def sortedArrayToBST(nums):  # time information is strange. The fastest example (40 ms) tested to be 80 ms.
     """
     :type nums: List[int]
     :rtype: TreeNode

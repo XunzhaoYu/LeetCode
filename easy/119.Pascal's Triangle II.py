@@ -32,7 +32,6 @@ def getRow(rowIndex):
             column += 1
         if column == int(row/2):
             res[column] = 2*res[-column]
-        print(res, row, column, row/2+1, row/2)
     if rowIndex % 2 == 0:
         res[rowIndex // 2 + 1:] = res[:rowIndex // 2][::-1]
     else:
